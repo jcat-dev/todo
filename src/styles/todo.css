@@ -1,0 +1,33 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  
+  background-color: var(--color-VeryDarkBlue);
+  position: relative;
+
+  & .todo-container {
+    width: 37.5%;
+    height: 75.5%;
+    
+    position: absolute;
+    top: 10%;
+    left: 31.25%;
+
+    & .todo-title {
+      font-size: 2.5rem;
+      margin-bottom: 5vh;
+
+      color: var(--color-VeryLightGray);
+      letter-spacing: 15px;
+      position: relative;
+
+      & .theme-btn {
+        background-color: inherit;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }    
+  }
+}
+

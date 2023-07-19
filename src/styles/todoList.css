@@ -1,0 +1,70 @@
+.todo-list {
+  background-color: var(--color-VeryDarkDesaturatedBlue);
+
+  & .todo-list__item {
+    display: flex;
+    color: var(--color-LightGrayishBlue);
+    border-bottom: 1px solid var(--color-VeryDarkGrayishBlue);
+
+    &:hover .todo-list__item-delete > img {
+      display: block;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    & .todo-list__item-completed { 
+      width: 25px;
+      height: 25px;
+      margin: 1.1em auto;
+      
+      border-radius: 100%;
+      display: flex;
+      background-color: var(--color-VeryDarkGrayishBlue);
+
+      &:hover {
+        background-image: var(--color-Background);
+      }
+      
+      & .completed-btn {
+        width: 23px;
+        height: 23px;
+        margin: auto;
+
+        border-radius: 100%;
+        background-color: var(--color-VeryDarkDesaturatedBlue);
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      & .completed-btn--bg-active {
+        background-image: var(--color-Background);
+      }
+    }
+
+    & .todo-list__item-completed--bg-active {
+      background-image: var(--color-Background);
+    }
+
+    & .todo-list__item-title {
+      width: 79%;
+      
+      display: flex;
+      align-items: center;
+    }
+
+    & .todo-list__item-title--completed {
+      text-decoration: line-through;
+      color: var(--color-VeryDarkGrayishBlueText);
+    }
+
+    & .todo-list__item-delete {
+      width: 8%;
+      background-color: inherit;
+      text-align: left;
+    }
+  }
+}

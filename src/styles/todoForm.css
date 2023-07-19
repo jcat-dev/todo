@@ -1,0 +1,27 @@
+.form {
+  margin-bottom: 1.3em;
+
+  background-color: var(--color-VeryDarkDesaturatedBlue);
+  display: flex;
+  box-shadow: 0px 20px 30px -20px;
+
+  & .form-circle {
+    width: 25px;
+    height: 25px;
+    margin: 1em auto;
+    border: 1px solid var(--color-VeryDarkGrayishBlue);
+
+    border-radius: 100%;
+  }
+  
+  & .form-input {
+    width: 87%;
+    color: var(--color-LightGrayishBlue);
+
+    font-size: inherit;
+    font-family: inherit;
+    background-color: inherit;
+    caret-color: var(--color-BrightBlue);
+  }
+}
+
