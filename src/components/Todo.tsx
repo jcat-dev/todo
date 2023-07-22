@@ -1,14 +1,38 @@
+import { useEffect, useState } from 'react'
 import TodoForm from './TodoForm'
 import TodoList from './TodoList'
-import bgDesktop from '../assets/images/bg-desktop-dark.jpg'
+import bgDesktopDark from '../assets/images/bg-desktop-dark.jpg'
+import bgMobilDark from '../assets/images/bg-mobile-dark.jpg'
 import iconSun from '../assets/images/icon-sun.svg'
 import '../styles/todo.css'
 
 const Todo: React.FC = () => {
+  const [imgSrc, setImgSrc] = useState('')
+
+  useEffect(() => {
+    const handleWidth = () => {
+      const width = window.innerWidth
+  
+      if (width <= 425 ) {
+        return setImgSrc(bgMobilDark)
+      }
+  
+      return setImgSrc(bgDesktopDark)
+    }
+
+    handleWidth()
+
+    window.addEventListener('resize', handleWidth)
+
+    return () => {
+      window.removeEventListener('resize', handleWidth)
+    }
+  }, [])
+
   return (
-    <div className='container' >
+    <main className='main' >
       <img 
-        src={bgDesktop} 
+        src={imgSrc} 
         alt="img background desktop" 
       />
 
@@ -18,7 +42,7 @@ const Todo: React.FC = () => {
         <h1
           className='todo-title'
         >
-            TODO
+          TODO
             
           <button
             className='theme-btn'
@@ -34,7 +58,7 @@ const Todo: React.FC = () => {
         <TodoForm />
         <TodoList />
       </div>
-    </div>
+    </main>
   )
 }
 
