@@ -12,7 +12,7 @@
   padding-bottom: 10vh;
   
   position: absolute;
-  top: 25%;
+  top: 26%;
   left: 31.25%;
 }
 
@@ -41,7 +41,7 @@
 
 @media screen and (max-width: 425px) {
   .main {
-    font-size: 16px;
+    font-size: 12px;
 
     & > img {
       height: 200px;
@@ -49,15 +49,16 @@
   }
   
   .todo-container {
-    width: 86%;
+    width: 88%;
 
-    left: 7%;
+    left: 6%;
     top: 23%;
   }
 
   .todo-title {
     font-size: 1.6rem;
-    letter-spacing: 10px;
+    letter-spacing: 11px;
+    margin-left: 0.1em;
 
     & img {
       width: 1.5em;

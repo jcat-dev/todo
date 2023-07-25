@@ -4,6 +4,7 @@ import TodoList from './TodoList'
 import bgDesktopDark from '../assets/images/bg-desktop-dark.jpg'
 import bgMobilDark from '../assets/images/bg-mobile-dark.jpg'
 import iconSun from '../assets/images/icon-sun.svg'
+import TodoStatesBtns from './TodoStatesBtns'
 import '../styles/todo.css'
 
 const Todo: React.FC = () => {
@@ -57,6 +58,7 @@ const Todo: React.FC = () => {
         
         <TodoForm />
         <TodoList />
+        <TodoStatesBtns />
       </div>
     </main>
   )
