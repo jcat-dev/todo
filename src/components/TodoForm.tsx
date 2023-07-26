@@ -17,7 +17,7 @@ const TodoForm: React.FC = () => {
     title: Yup.string().trim().required(),
     completed: Yup.boolean().required()
   })
-
+ 
   return(
     <Formik
       initialValues={initialValues}
@@ -34,6 +34,7 @@ const TodoForm: React.FC = () => {
           type="text"
           id="title"
           name="title"
+          placeholder="Create a new todo..."
         />
       </Form>
     </Formik>
