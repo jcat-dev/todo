@@ -1,9 +1,12 @@
+import ProviderLightTheme from './contexts/ProviderLightTheme'
 import ProviderTodo from './contexts/ProviderTodo'
 import './styles/global.css'
 
 const App = () => {
   return (
-    <ProviderTodo />
+    <ProviderLightTheme>
+      <ProviderTodo />
+    </ProviderLightTheme>
   )
 }
 

@@ -1,40 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useResizeWidth } from '../hooks/useResizeWidth'
+import { useContext } from 'react'
+import { ThemeContext } from '../contexts/ProviderLightTheme'
 import TodoForm from './TodoForm'
 import TodoList from './TodoList'
-import bgDesktopDark from '../assets/images/bg-desktop-dark.jpg'
-import bgMobilDark from '../assets/images/bg-mobile-dark.jpg'
-import iconSun from '../assets/images/icon-sun.svg'
 import TodoStatesBtns from './TodoStatesBtns'
+import iconSun from '../assets/images/icon-sun.svg'
+import iconMoon from '../assets/images/icon-moon.svg'
 import '../styles/todo.css'
 
 const Todo: React.FC = () => {
-  const [imgSrc, setImgSrc] = useState('')
-
-  useEffect(() => {
-    const handleWidth = () => {
-      const width = window.innerWidth
+  const theme = useResizeWidth()
   
-      if (width <= 425 ) {
-        return setImgSrc(bgMobilDark)
-      }
-  
-      return setImgSrc(bgDesktopDark)
-    }
-
-    handleWidth()
-
-    window.addEventListener('resize', handleWidth)
-
-    return () => {
-      window.removeEventListener('resize', handleWidth)
-    }
-  }, [])
+  const { 
+    lightModeEnabled,
+    toggleTheme
+  } = useContext(ThemeContext)
 
   return (
-    <main className='main' >
+    <main 
+      className="main" 
+    >
       <img 
-        src={imgSrc} 
-        alt="img background desktop" 
+        src={
+          lightModeEnabled
+            ? theme?.lightImg
+            : theme?.darkImg
+        } 
+        alt="img background desktop/mobil" 
       />
 
       <div
@@ -46,12 +38,16 @@ const Todo: React.FC = () => {
           TODO
             
           <button
-            className='theme-btn'
+            className={'theme-btn'}
+            onClick={toggleTheme}
           >
             <img 
-              className=''
-              src={iconSun} 
-              alt="icon sun" 
+              src={
+                lightModeEnabled
+                  ? iconMoon
+                  : iconSun
+              } 
+              alt= {'icon moon/sun'}
             />
           </button>
         </h1> 
