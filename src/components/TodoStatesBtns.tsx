@@ -40,8 +40,8 @@ const TodoStatesBtns: React.FC = () => {
         className='todo-states__count'
       >
         {
-          todoList.length >= 5
-            ? todoList.length - 5
+          todoList.length > 6
+            ? todoList.length - 6
             : 0 
         } items left
       </p>
