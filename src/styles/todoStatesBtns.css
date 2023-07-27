@@ -9,7 +9,7 @@
 
   color: var(--color-DarkGrayishBlue);
   background-color: var(--color-VeryDarkDesaturatedBlue);
-  box-shadow: 0px 20px 45px -15px black;
+  box-shadow: 0px 20px 40px -20px var(--color-shadow);
 }
 
 .todo-states__count {
@@ -17,6 +17,7 @@
   padding: 1.25em 1.7em;
 
   background-color: var(--color-VeryDarkDesaturatedBlue);
+  box-shadow: 0 5px 10px -10px var(--color-shadow);
 }
 
 .todo-states__clear-btn {
@@ -28,6 +29,7 @@
   font-weight: inherit;
   background-color: var(--color-VeryDarkDesaturatedBlue);
   color: inherit;
+  box-shadow: 0 5px 10px -10px var(--color-shadow);
 
   &:hover {
     color: var(--color-LightGrayishBlueHover);
@@ -69,7 +71,6 @@
     display: flex;
     align-items: center;
     border-end-start-radius: 5px;
-    box-shadow: 0px 20px 45px -15px black;
   }
   
   .todo-states__btns {
@@ -78,6 +79,7 @@
     height: 100%;
 
     border-radius: 5px;
+    box-shadow: 0px -10px 40px -20px var(--color-shadow);
 
     & > button {
       margin: 0;
@@ -95,6 +97,5 @@
 
     border-end-end-radius: 5px;
     text-align: end;
-    box-shadow: 0px 20px 45px -15px black;
   }
 }

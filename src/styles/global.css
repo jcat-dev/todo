@@ -16,6 +16,8 @@
   --color-VeryDarkGrayishBlue1: hsl(233, 14%, 35%);
   /*Border Circle*/
   --color-VeryDarkGrayishBlue2: hsl(237, 14%, 26%);
+  /*Shadow*/
+  --color-shadow: black;
 }
 
 body {

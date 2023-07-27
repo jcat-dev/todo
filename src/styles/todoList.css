@@ -1,5 +1,6 @@
 .todo-list {
   background-color: var(--color-VeryDarkDesaturatedBlue); 
+  box-shadow: 0px 0px 50px -35px var(--color-shadow);
 }
 
 .todo-list__item {
