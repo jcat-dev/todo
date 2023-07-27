@@ -1,36 +1,17 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { TodoContext } from '../contexts/ProviderTodo'
 import TodoStateBtn from './TodoStateBtn'
-import { BtnType } from '../types/BtnType'
 import '../styles/todoStatesBtns.css'
 
 const TodoStatesBtns: React.FC = () => {
-  const [isActive, setIsActive] = useState<BtnType>('all')
-
   const {
     todoList,
+    selectedTodo,
     deleteAllTodoCompleted,
     getActiveTodo,
     getAllTodo,
     getCompletedTodo
   } = useContext(TodoContext)
-
-  const handleStateBtn = (type: BtnType) => {
-    if (type === 'active') {
-      setIsActive('active')
-      getActiveTodo()
-    }
-
-    if (type === 'all') {
-      setIsActive('all')
-      getAllTodo()
-    }
-
-    if (type === 'completed') {
-      setIsActive('completed')
-      getCompletedTodo()
-    }
-  }
 
   return (    
     <div
@@ -50,21 +31,21 @@ const TodoStatesBtns: React.FC = () => {
         className='todo-states__btns'
       >
         <TodoStateBtn 
-          activeType={isActive}
+          activeType={selectedTodo}
           type={'all'}
-          handleClick={() => handleStateBtn('all')}
+          handleClick={getAllTodo}
         />
 
         <TodoStateBtn 
-          activeType={isActive}
+          activeType={selectedTodo}
           type={'active'}
-          handleClick={() => handleStateBtn('active')}
+          handleClick={getActiveTodo}
         />
 
         <TodoStateBtn 
-          activeType={isActive}
+          activeType={selectedTodo}
           type={'completed'}
-          handleClick={() => handleStateBtn('completed')}
+          handleClick={getCompletedTodo}
         />     
       </div> 
 
