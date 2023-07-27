@@ -18,15 +18,31 @@ const ProviderLightTheme:React.FC<Props> = ({children}) => {
   const [lightModeEnabled, setLightModeEnabled] = useState<boolean>(false)
 
   useEffect(() => {
-    if (lightModeEnabled) {
-      return document.querySelector('body')?.setAttribute('data-theme', 'light')
+    if (localStorage.getItem('light-mode') === 'true') {  
+      setLightModeEnabled(true)
+      document.querySelector('body')?.setAttribute('data-theme', 'light')
+      return 
+    }    
+
+    document.querySelector('body')?.setAttribute('data-theme', 'dark')
+  }, [])
+
+  const setTheme = (value: boolean) => {
+    if (value) {
+      localStorage.setItem('light-mode', 'true')
+      document.querySelector('body')?.setAttribute('data-theme', 'light')
+      return 
     }
 
-    return document.querySelector('body')?.setAttribute('data-theme', 'dark')
-  }, [lightModeEnabled])
-
+    localStorage.setItem('light-mode', 'false')
+    document.querySelector('body')?.setAttribute('data-theme', 'dark')
+  }
+  
   const toggleTheme = () => {
-    setLightModeEnabled(!lightModeEnabled)
+    const newValue = !lightModeEnabled
+
+    setTheme(newValue)
+    setLightModeEnabled(newValue)
   }
 
   return(
