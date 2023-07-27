@@ -1,12 +1,13 @@
 .todo-states {
   font-size: 14px;
-  border-top: 1px solid var(--color-VeryDarkGrayishBlue);
+  border-top: 1px solid var(--color-VeryDarkGrayishBlue1);
 
   display: flex;
   border-end-end-radius: 5px;
   border-end-start-radius: 5px;
+  font-weight: bold;
 
-  color: var(--color-VeryDarkGrayishBlueText);
+  color: var(--color-DarkGrayishBlue);
   background-color: var(--color-VeryDarkDesaturatedBlue);
   box-shadow: 0px 20px 45px -15px black;
 }
@@ -21,13 +22,15 @@
 .todo-states__clear-btn {
   margin-left: auto;    
   padding: 1.25em 1.7em;
-
+  padding-left: 0;
+  
   font-family: inherit;
+  font-weight: inherit;
   background-color: var(--color-VeryDarkDesaturatedBlue);
   color: inherit;
 
   &:hover {
-    color: var(--color-VeryLightGray);
+    color: var(--color-LightGrayishBlueHover);
     cursor: pointer;
   }
 }

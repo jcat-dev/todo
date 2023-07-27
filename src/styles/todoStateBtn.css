@@ -1,17 +1,19 @@
 .todo-state-btn {
   font-size: inherit;
 
-  background-color: inherit;
-  color: inherit;
   text-transform: capitalize;
   font-family: inherit;
+  font-weight: inherit;
+  
+  background-color: inherit;
+  color: inherit;
 
   &.todo-state-btn--active {
     color: var(--color-BrightBlue);
   }
   
   &.todo-state-btn:hover {
-    color: var(--color-VeryLightGray);
+    color: var(--color-LightGrayishBlueHover);
     cursor: pointer;
   }
 }

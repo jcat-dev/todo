@@ -1,0 +1,14 @@
+[data-theme="light"] {
+  /*Background body*/
+  --color-VeryDarkBlue: hsl(0, 0%, 98%);
+  /*Background todo*/
+  --color-VeryDarkDesaturatedBlue: white;
+  /*Text*/
+  --color-LightGrayishBlue: hsl(235, 19%, 35%);
+  --color-LightGrayishBlueHover: hsl(235, 19%, 35%);
+  --color-DarkGrayishBlue: hsl(236, 9%, 61%);
+  /*Border*/
+  --color-VeryDarkGrayishBlue1: hsl(233, 11%, 84%);
+  /*Border Circle*/
+  --color-VeryDarkGrayishBlue2: hsl(236, 33%, 92%);
+}

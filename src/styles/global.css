@@ -4,26 +4,18 @@
   --color-BrightBlue: hsl(220, 98%, 61%);
   --color-Background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 
-  /*Light Theme*/
-  --color-VeryLightGray: hsl(0, 0%, 98%);
-  --color-VeryLightGrayishBlue: hsl(236, 33%, 92%);
-  /*
-  --color-LightGrayishBlue: hsl(233, 11%, 84%);
-  --color-DarkGrayishBlue: hsl(236, 9%, 61%);
-  --color-VeryDarkGrayishBlue: hsl(235, 19%, 35%);
-  */
-
-  /*Dark Theme*/
-  --color-VeryDarkBlue: hsl(235, 21%, 11%); 
-  --color-VeryDarkDesaturatedBlue: hsl(235, 24%, 19%); 
-  --color-VeryDarkGrayishBlue: hsl(237, 14%, 26%);
-  --color-VeryDarkGrayishBlueText: hsl(233, 14%, 35%);
-  --color-LightGrayishBlue: hsl(234, 39%, 85%); 
-  
-  /*
+  /*Background body*/
+  --color-VeryDarkBlue: hsl(235, 21%, 11%);
+  /*Background todo*/
+  --color-VeryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+  /*Text*/
+  --color-LightGrayishBlue: hsl(234, 39%, 85%);
   --color-LightGrayishBlueHover: hsl(236, 33%, 92%);
   --color-DarkGrayishBlue: hsl(234, 11%, 52%);
-  */
+  /*Border*/
+  --color-VeryDarkGrayishBlue1: hsl(233, 14%, 35%);
+  /*Border Circle*/
+  --color-VeryDarkGrayishBlue2: hsl(237, 14%, 26%);
 }
 
 body {
