@@ -1,9 +1,9 @@
-import { BtnType } from '../types/BtnType'
+import { TodoType } from '../types/TodoType'
 import '../styles/todoStateBtn.css'
 
 interface Props {
-  type: BtnType
-  activeType: BtnType
+  type: TodoType
+  activeType: TodoType
   handleClick: () => void
 }
 

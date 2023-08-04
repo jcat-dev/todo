@@ -6,7 +6,7 @@ import '../styles/todoStatesBtns.css'
 const TodoStatesBtns: React.FC = () => {
   const {
     todoList,
-    selectedTodo,
+    todoType,
     deleteAllTodoCompleted,
     getActiveTodo,
     getAllTodo,
@@ -31,19 +31,19 @@ const TodoStatesBtns: React.FC = () => {
         className='todo-states__btns'
       >
         <TodoStateBtn 
-          activeType={selectedTodo}
+          activeType={todoType}
           type={'all'}
           handleClick={getAllTodo}
         />
 
         <TodoStateBtn 
-          activeType={selectedTodo}
+          activeType={todoType}
           type={'active'}
           handleClick={getActiveTodo}
         />
 
         <TodoStateBtn 
-          activeType={selectedTodo}
+          activeType={todoType}
           type={'completed'}
           handleClick={getCompletedTodo}
         />     
