@@ -4,15 +4,19 @@ import Todo from '../components/Todo'
 
 export const TodoContext = createContext<ReturnType<typeof useTodo>>({
   todoList: [],
-  selectedTodo: 'all',
+  todoType: 'all',
+
   updateTodo: async () => {},
   createTodo: async () => {},
   deleteTodoByID: async () => {},
   deleteAllTodoCompleted: async () => {},
   completeTodo: async () => {},
+
   getAllTodo:  () => {},
   getActiveTodo:  () => {},
-  getCompletedTodo:  () => {}
+  getCompletedTodo:  () => {},
+
+  sortList: () => {}
 })
 
 const ProviderTodo = () => {

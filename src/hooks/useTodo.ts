@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Todo, TodoWithID } from '../types/Todo'
 import { ResponseTodo } from '../types/Response'
-import { BtnType } from '../types/BtnType'
+import { TodoType } from '../types/TodoType'
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<TodoWithID[]>([])
   const [filteredTodo, setFilteredTodo] = useState<TodoWithID[]>([])
-  const [selectedTodo, setSelectedTodo] = useState<BtnType>('all')
+  const [todoType, setTodoType] = useState<TodoType>('all')
 
   useEffect(() => {    
     updateTodo()
@@ -26,7 +26,7 @@ export const useTodo = () => {
 
       setTodoList(data.data)
       setFilteredTodo(data.data)
-      setSelectedTodo('all')
+      setTodoType('all')
     }
   }
 
@@ -72,33 +72,45 @@ export const useTodo = () => {
 
   const getAllTodo = () => {
     setFilteredTodo(todoList)
-    setSelectedTodo('all')
+    setTodoType('all')
   }
 
   const getActiveTodo = () => {
     setFilteredTodo(
       todoList.filter((value) => !value.completed)
     )
-    setSelectedTodo('active')
+    setTodoType('active')
   }
 
   const getCompletedTodo = () => {
     setFilteredTodo(
       todoList.filter((value) => value.completed)
     )
-    setSelectedTodo('completed')
+    setTodoType('completed')
+  }
+
+  const sortList = (currentIndex: number, targetIndex: number) => {
+    const newArray = Array.from(filteredTodo)
+    const [removedItem] = newArray.splice(currentIndex, 1)
+    newArray.splice(targetIndex, 0, removedItem)
+
+    setFilteredTodo(newArray)
   }
 
   return {
     todoList: filteredTodo,
-    selectedTodo,
+    todoType,
+
     updateTodo,
     createTodo,
     deleteTodoByID,
     deleteAllTodoCompleted,
     completeTodo,
+    
     getAllTodo,
     getActiveTodo,
-    getCompletedTodo
+    getCompletedTodo,
+    
+    sortList,
   }
 }
