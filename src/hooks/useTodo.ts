@@ -17,13 +17,6 @@ export const useTodo = () => {
     const data: ResponseTodo = await result.json()
 
     if (data.status) {      
-      data.data.sort((a, b) => {
-        if ((a.completed && a.completed === b.completed) || (a.completed === b.completed)) return 0
-        if (a.completed && a.completed !== b.completed) return -1
-        
-        return 1
-      })
-
       setTodoList(data.data)
       setFilteredTodo(data.data)
       setTodoType('all')
