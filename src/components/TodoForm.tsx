@@ -6,21 +6,27 @@ import * as Yup from 'yup'
 import '../styles/todoForm.css'
 
 const TodoForm: React.FC = () => {
-  const { createTodo } = useContext(TodoContext)
-
+  const { 
+    createTodo,
+    todoList
+  } = useContext(TodoContext)
+  
   const initialValues: Todo = {
     title: '',
-    completed: false
+    completed: false,
+    order: todoList.length
   } 
   
   const validationSchema: Yup.ObjectSchema<Todo> = Yup.object({
     title: Yup.string().trim().required(),
-    completed: Yup.boolean().required()
+    completed: Yup.boolean().required(),
+    order: Yup.number().required()
   })
  
   return(
     <Formik
       initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={(value) => createTodo(value)}
     >
