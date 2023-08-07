@@ -70,6 +70,18 @@ export const useTodo = () => {
     updateTodo()
   }
 
+  const sortTodo = async (currentIndex: number, targetIndex: number) => {
+    await fetch(String(import.meta.env.VITE_API_TODO) + '/sort', {
+      method: 'PUT',
+      body: JSON.stringify({ currentIndex, targetIndex }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    updateTodo()
+  }
+
   const getAllTodo = () => {
     setFilteredTodo(todoList)
     setTodoType('all')
@@ -89,28 +101,18 @@ export const useTodo = () => {
     setTodoType('completed')
   }
 
-  const sortList = (currentIndex: number, targetIndex: number) => {
-    const newArray = Array.from(filteredTodo)
-    const [removedItem] = newArray.splice(currentIndex, 1)
-    newArray.splice(targetIndex, 0, removedItem)
-
-    setFilteredTodo(newArray)
-  }
-
   return {
     todoList: filteredTodo,
     todoType,
 
-    updateTodo,
     createTodo,
     deleteTodoByID,
     deleteAllTodoCompleted,
     completeTodo,
-    
+    sortTodo,
+
     getAllTodo,
     getActiveTodo,
     getCompletedTodo,
-    
-    sortList,
   }
 }

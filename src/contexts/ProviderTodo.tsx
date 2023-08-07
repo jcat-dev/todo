@@ -6,17 +6,15 @@ export const TodoContext = createContext<ReturnType<typeof useTodo>>({
   todoList: [],
   todoType: 'all',
 
-  updateTodo: async () => {},
   createTodo: async () => {},
   deleteTodoByID: async () => {},
   deleteAllTodoCompleted: async () => {},
   completeTodo: async () => {},
+  sortTodo: async () => {},
 
   getAllTodo:  () => {},
   getActiveTodo:  () => {},
   getCompletedTodo:  () => {},
-
-  sortList: () => {}
 })
 
 const ProviderTodo = () => {

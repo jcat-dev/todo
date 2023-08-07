@@ -10,13 +10,16 @@ const TodoList: React.FC = () => {
     todoList,
     completeTodo,
     deleteTodoByID,
-    sortList
+    sortTodo
   } = useContext(TodoContext)
   
   const handleDragAndDrop = (result: DropResult) => {
-    if (!result.destination) return
+    const currentIndex = result.source.index
+    const targetIndex = result.destination
 
-    sortList(result.source.index, result.destination.index)
+    if (!targetIndex || currentIndex === targetIndex.index) return
+
+    sortTodo(currentIndex, targetIndex.index)
   }
 
   return (
