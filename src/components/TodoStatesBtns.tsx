@@ -1,12 +1,14 @@
 import { useContext } from 'react'
 import { TodoContext } from '../contexts/ProviderTodo'
+import { TodoType } from '../types/TodoType'
 import TodoStateBtn from './TodoStateBtn'
+import localStorageType from '../utils/localStorageType'
 import '../styles/todoStatesBtns.css'
 
 const TodoStatesBtns: React.FC = () => {
+  const todoType = localStorageType.getItem<TodoType>('todoType') ?? 'all'
   const {
     todoList,
-    todoType,
     deleteAllTodoCompleted,
     getActiveTodo,
     getAllTodo,

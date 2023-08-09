@@ -4,7 +4,6 @@ import Todo from '../components/Todo'
 
 export const TodoContext = createContext<ReturnType<typeof useTodo>>({
   todoList: [],
-  todoType: 'all',
 
   createTodo: async () => {},
   deleteTodoByID: async () => {},

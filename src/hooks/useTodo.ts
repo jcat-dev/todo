@@ -2,23 +2,32 @@ import { useEffect, useState } from 'react'
 import { Todo, TodoWithID } from '../types/Todo'
 import { TodoType } from '../types/TodoType'
 import fetchTodo from '../utils/fetchTodo'
+import localStorageType from '../utils/localStorageType'
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<TodoWithID[]>([])
   const [filteredTodo, setFilteredTodo] = useState<TodoWithID[]>([])
-  const [todoType, setTodoType] = useState<TodoType>('all')
-
+  
   useEffect(() => {    
     updateTodo()
-  }, [])
-  
-  const updateTodo = async () => {
-    const data = await fetchTodo.setGet()
+  }, []) 
 
-    if (data.status) {      
-      setTodoList(data.data)
-      setFilteredTodo(data.data)
-      setTodoType('all')
+  const updateTodo = async () => {
+    const result = await fetchTodo.setGet()
+    
+    if (result.status) {      
+      const item = localStorageType.getItem<TodoType>('todoType')
+      setTodoList(result.data)
+
+      if (item === 'active') {
+        return setFilteredTodo(result.data.filter((value) => !value.completed))
+      }
+
+      if (item === 'completed') {
+        return setFilteredTodo(result.data.filter((value) => value.completed))
+      }
+
+      return setFilteredTodo(result.data)
     }
   }
 
@@ -44,8 +53,9 @@ export const useTodo = () => {
 
   const sortTodo = async (currentIndex: number, targetIndex: number) => {
     const todoLength = todoList.filter((value) => value.completed).length
-
-    if (todoType === 'all') {
+    const todoType = localStorageType.getItem<TodoType>('todoType')
+    
+    if (todoType !== 'completed') {
       await fetchTodo.setUpdate( { currentIndex, targetIndex}, '/sort')
     }
 
@@ -60,27 +70,22 @@ export const useTodo = () => {
   }
 
   const getAllTodo = () => {
+    localStorageType.setItem<TodoType>('todoType', 'all')
     setFilteredTodo(todoList)
-    setTodoType('all')
   }
 
   const getActiveTodo = () => {
-    setFilteredTodo(
-      todoList.filter((value) => !value.completed)
-    )
-    setTodoType('active')
+    localStorageType.setItem<TodoType>('todoType', 'active')
+    setFilteredTodo(todoList.filter((value) => !value.completed))
   }
 
   const getCompletedTodo = () => {
-    setFilteredTodo(
-      todoList.filter((value) => value.completed)
-    )
-    setTodoType('completed')
+    localStorageType.setItem<TodoType>('todoType', 'completed')
+    setFilteredTodo(todoList.filter((value) => value.completed))
   }
 
   return {
     todoList: filteredTodo,
-    todoType,
 
     createTodo,
     deleteTodoByID,
