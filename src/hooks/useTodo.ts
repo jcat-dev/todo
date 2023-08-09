@@ -52,21 +52,23 @@ export const useTodo = () => {
   }
 
   const sortTodo = async (currentIndex: number, targetIndex: number) => {
-    const todoLength = todoList.filter((value) => value.completed).length
-    const todoType = localStorageType.getItem<TodoType>('todoType')
+    const todoType = localStorageType.getItem<TodoType>('todoType')   
     
-    if (todoType !== 'completed') {
-      await fetchTodo.setUpdate( { currentIndex, targetIndex}, '/sort')
-    }
+    if (todoType === 'active') {     
+      const todoLength = todoList.filter((value) => value.completed).length
 
-    if (todoType === 'active') {
       await fetchTodo.setUpdate({ 
         currentIndex: currentIndex + todoLength, 
         targetIndex: targetIndex + todoLength 
       }, '/sort',)
+      await updateTodo()
+      return
     }
-    
-    await updateTodo()
+
+    if (todoType !== 'completed') {
+      await fetchTodo.setUpdate({ currentIndex, targetIndex}, '/sort')
+      await updateTodo()
+    }    
   }
 
   const getAllTodo = () => {
