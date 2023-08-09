@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Todo, TodoWithID } from '../types/Todo'
-import { ResponseTodo } from '../types/Response'
 import { TodoType } from '../types/TodoType'
+import fetchTodo from '../utils/fetchTodo'
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<TodoWithID[]>([])
@@ -13,8 +13,7 @@ export const useTodo = () => {
   }, [])
   
   const updateTodo = async () => {
-    const result = await fetch(String(import.meta.env.VITE_API_TODO))
-    const data: ResponseTodo = await result.json()
+    const data = await fetchTodo.setGet()
 
     if (data.status) {      
       setTodoList(data.data)
@@ -23,56 +22,41 @@ export const useTodo = () => {
     }
   }
 
-  const createTodo = async (value: Todo) => {    
-    await fetch(String(import.meta.env.VITE_API_TODO), {
-      method: 'POST',
-      body: JSON.stringify(value),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    
-    updateTodo()
+  const createTodo = async (value: Todo) => {   
+    await fetchTodo.setPost(value)
+    await updateTodo()
   }
 
   const deleteTodoByID = async (id: string) => {
-    await fetch(String(import.meta.env.VITE_API_TODO) + `/${id}`, {
-      method: 'DELETE'
-    })
-
-    updateTodo()
+    await fetchTodo.setDelete(`/${id}`)
+    await updateTodo()
   }
 
   const deleteAllTodoCompleted = async () => {
-    await fetch(String(import.meta.env.VITE_API_TODO), {
-      method: 'DELETE'
-    })
-
-    updateTodo()
+    await fetchTodo.setDelete()
+    await updateTodo()
   }
 
   const completeTodo = async (todo: TodoWithID) => {
-    await fetch(String(import.meta.env.VITE_API_TODO) + `/${todo._id}`, {
-      method: 'PUT',
-      body: JSON.stringify({...todo, completed: !todo.completed}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    
-    updateTodo()
+    await fetchTodo.setUpdate({...todo, completed: !todo.completed}, `/${todo._id}`)
+    await updateTodo()
   }
 
   const sortTodo = async (currentIndex: number, targetIndex: number) => {
-    await fetch(String(import.meta.env.VITE_API_TODO) + '/sort', {
-      method: 'PUT',
-      body: JSON.stringify({ currentIndex, targetIndex }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    const todoLength = todoList.filter((value) => value.completed).length
 
-    updateTodo()
+    if (todoType === 'all') {
+      await fetchTodo.setUpdate( { currentIndex, targetIndex}, '/sort')
+    }
+
+    if (todoType === 'active') {
+      await fetchTodo.setUpdate({ 
+        currentIndex: currentIndex + todoLength, 
+        targetIndex: targetIndex + todoLength 
+      }, '/sort',)
+    }
+    
+    await updateTodo()
   }
 
   const getAllTodo = () => {
