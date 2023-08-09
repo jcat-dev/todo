@@ -87,8 +87,9 @@ export const useTodo = () => {
   }
 
   return {
-    todoList: filteredTodo,
-
+    todo: todoList,
+    filteredTodo,
+    
     createTodo,
     deleteTodoByID,
     deleteAllTodoCompleted,

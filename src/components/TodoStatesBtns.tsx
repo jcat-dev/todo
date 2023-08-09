@@ -8,7 +8,7 @@ import '../styles/todoStatesBtns.css'
 const TodoStatesBtns: React.FC = () => {
   const todoType = localStorageType.getItem<TodoType>('todoType') ?? 'all'
   const {
-    todoList,
+    filteredTodo,
     deleteAllTodoCompleted,
     getActiveTodo,
     getAllTodo,
@@ -23,8 +23,8 @@ const TodoStatesBtns: React.FC = () => {
         className='todo-states__count'
       >
         {
-          todoList.length > 6
-            ? todoList.length - 6
+          filteredTodo.length > 6
+            ? filteredTodo.length - 6
             : 0 
         } items left
       </p>

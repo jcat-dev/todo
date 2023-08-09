@@ -7,7 +7,7 @@ import '../styles/todoList.css'
 
 const TodoList: React.FC = () => {
   const {
-    todoList,
+    filteredTodo,
     completeTodo,
     deleteTodoByID,
     sortTodo
@@ -37,7 +37,7 @@ const TodoList: React.FC = () => {
               ref={provided.innerRef}
             >
               {
-                todoList.map((value, index) => {
+                filteredTodo.map((value, index) => {
                   if (index <= 5) 
                     return (
                       <Draggable
