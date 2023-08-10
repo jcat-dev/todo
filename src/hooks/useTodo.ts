@@ -7,8 +7,9 @@ import localStorageType from '../utils/localStorageType'
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<TodoWithID[]>([])
   const [filteredTodo, setFilteredTodo] = useState<TodoWithID[]>([])
-  
-  useEffect(() => {    
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+
+  useEffect(() => { 
     updateTodo()
   }, []) 
 
@@ -20,38 +21,46 @@ export const useTodo = () => {
       setTodoList(result.data)
 
       if (item === 'active') {
-        return setFilteredTodo(result.data.filter((value) => !value.completed))
+        setFilteredTodo(result.data.filter((value) => !value.completed))        
+        return setIsLoading(false)
       }
 
       if (item === 'completed') {
-        return setFilteredTodo(result.data.filter((value) => value.completed))
+        setFilteredTodo(result.data.filter((value) => value.completed))        
+        return setIsLoading(false)
       }
 
-      return setFilteredTodo(result.data)
+      setFilteredTodo(result.data)      
+      return setIsLoading(false)
     }
   }
 
   const createTodo = async (value: Todo) => {   
+    setIsLoading(true)
     await fetchTodo.setPost(value)
     await updateTodo()
   }
 
   const deleteTodoByID = async (id: string) => {
+    setIsLoading(true)
     await fetchTodo.setDelete(`/${id}`)
     await updateTodo()
   }
 
   const deleteAllTodoCompleted = async () => {
+    setIsLoading(true)
     await fetchTodo.setDelete()
     await updateTodo()
   }
 
   const completeTodo = async (todo: TodoWithID) => {
+    setIsLoading(true)
     await fetchTodo.setUpdate({...todo, completed: !todo.completed}, `/${todo._id}`)
     await updateTodo()
   }
 
   const sortTodo = async (currentIndex: number, targetIndex: number) => {
+    setIsLoading(true)    
     const todoType = localStorageType.getItem<TodoType>('todoType')   
     
     if (todoType === 'active') {     
@@ -60,15 +69,16 @@ export const useTodo = () => {
       await fetchTodo.setUpdate({ 
         currentIndex: currentIndex + todoLength, 
         targetIndex: targetIndex + todoLength 
-      }, '/sort',)
-      await updateTodo()
-      return
+      }, '/sort',)      
+      return await updateTodo()
     }
 
     if (todoType !== 'completed') {
       await fetchTodo.setUpdate({ currentIndex, targetIndex}, '/sort')
-      await updateTodo()
-    }    
+      return await updateTodo()
+    }   
+
+    setIsLoading(false) 
   }
 
   const getAllTodo = () => {
@@ -89,6 +99,7 @@ export const useTodo = () => {
   return {
     todo: todoList,
     filteredTodo,
+    isLoading,
     
     createTodo,
     deleteTodoByID,
