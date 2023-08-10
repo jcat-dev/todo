@@ -12,6 +12,7 @@
   padding-bottom: 10vh;
   
   position: absolute;
+  z-index: var(--todoContainer-z-index);
   top: 26%;
   left: 31.25%;
 }

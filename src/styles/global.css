@@ -18,6 +18,9 @@
   --color-VeryDarkGrayishBlue2: hsl(237, 14%, 26%);
   /*Shadow*/
   --color-shadow: black;
+
+  --todoContainer-z-index: 9;
+  --loading-z-index: 10;
 }
 
 body {
