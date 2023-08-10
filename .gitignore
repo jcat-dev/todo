@@ -6,3 +6,4 @@
 node_modules
 todo-app-main
 .env
+dist
