@@ -1,11 +1,13 @@
 import { useResizeWidth } from '../hooks/useResizeWidth'
 import { useContext } from 'react'
 import { ThemeContext } from '../contexts/ProviderLightTheme'
+import { TodoContext } from '../contexts/ProviderTodo'
 import TodoForm from './TodoForm'
 import TodoList from './TodoList'
 import TodoStatesBtns from './TodoStatesBtns'
 import iconSun from '../assets/images/icon-sun.svg'
 import iconMoon from '../assets/images/icon-moon.svg'
+import Loading from './Loading'
 import '../styles/todo.css'
 
 const Todo: React.FC = () => {
@@ -15,6 +17,10 @@ const Todo: React.FC = () => {
     lightModeEnabled,
     toggleTheme
   } = useContext(ThemeContext)
+
+  const {
+    isLoading
+  } = useContext(TodoContext)
 
   return (
     <main 
@@ -28,7 +34,7 @@ const Todo: React.FC = () => {
         } 
         alt="img background desktop/mobil" 
       />
-
+                  
       <div
         className='todo-container'
       >
@@ -55,7 +61,8 @@ const Todo: React.FC = () => {
         <TodoForm />
         <TodoList />
         <TodoStatesBtns />
-      </div>
+        <Loading loading={isLoading} />  
+      </div>      
     </main>
   )
 }
