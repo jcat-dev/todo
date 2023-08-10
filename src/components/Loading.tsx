@@ -5,7 +5,7 @@ interface Props {
 }
 
 const Loading: React.FC<Props> = ({ loading }) => {
-  if (!loading) return
+  if (!loading) return (<></>)
 
   return (
     <div
