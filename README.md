@@ -30,13 +30,15 @@ Users should be able to:
 - TypeScript
 - React
 - Lib
- - [Formik](https://formik.org/)
- - [Yup](https://www.npmjs.com/package/yup)
- - [Drag and Drop](https://www.npmjs.com/package/react-beautiful-dnd)
+  - [Formik](https://formik.org/)
+  - [Yup](https://www.npmjs.com/package/yup)
+  - [Drag and Drop](https://www.npmjs.com/package/react-beautiful-dnd)
 - Vite
 - ESLint
 - HTML
 - CSS
 
 ## What I learned
-
+[X] Button Accessibility
+[X] Dark mode with LocalStorage
+[X] Drag and drop library
