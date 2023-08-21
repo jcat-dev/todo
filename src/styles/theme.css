@@ -1,3 +1,23 @@
+[data-theme="dark"] {
+  /*Background body*/
+  --color-VeryDarkBlue: hsl(235, 21%, 11%);
+  /*Background todo*/
+  --color-VeryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+  /*Text*/
+  --color-LightGrayishBlue: hsl(234, 39%, 85%);
+  --color-LightGrayishBlueHover: hsl(236, 33%, 92%);
+  --color-DarkGrayishBlue: hsl(234, 11%, 52%);
+  /*Border*/
+  --color-VeryDarkGrayishBlue1: hsl(233, 14%, 35%);
+  /*Border Circle*/
+  --color-VeryDarkGrayishBlue2: hsl(237, 14%, 26%);
+  /*Shadow*/
+  --color-shadow: black;
+  /*background-img*/
+  --bg-img: url("../assets/images/bg-desktop-dark.jpg");
+  --bg-img-mobile: url("../assets/images/bg-mobile-dark.jpg");
+}
+
 [data-theme="light"] {
   /*Background body*/
   --color-VeryDarkBlue: hsl(0, 0%, 98%);
@@ -13,4 +33,7 @@
   --color-VeryDarkGrayishBlue2: hsl(236, 33%, 92%);
   /*Shadow*/
   --color-shadow: gray;
+  /*background-img*/
+  --bg-img: url("../assets/images/bg-desktop-light.jpg");
+  --bg-img-mobile: url("../assets/images/bg-mobile-light.jpg");
 }
