@@ -7,6 +7,7 @@ import TodoStatesBtns from './TodoStatesBtns'
 import iconSun from '../assets/images/icon-sun.svg'
 import iconMoon from '../assets/images/icon-moon.svg'
 import Loading from './Loading'
+import Button from './accessibility/Button'
 import '../styles/todo.css'
 
 const Todo: React.FC = () => {  
@@ -29,10 +30,16 @@ const Todo: React.FC = () => {
         <h1
           className='todo-title'
         >
-          TODO
-            
-          <button
+          TODO   
+
+          <Button
             className={'theme-btn'}
+            ariaLabel={
+              lightModeEnabled
+                ? 'light mode'
+                : 'dark mode'
+            }
+            type='button'
             onClick={toggleTheme}
           >
             <img 
@@ -43,7 +50,7 @@ const Todo: React.FC = () => {
               } 
               alt= {'icon moon/sun'}
             />
-          </button>
+          </Button>
         </h1> 
         
         <TodoForm />

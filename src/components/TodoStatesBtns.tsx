@@ -4,6 +4,7 @@ import { TodoType } from '../types/TodoType'
 import TodoStateBtn from './TodoStateBtn'
 import localStorageType from '../utils/localStorageType'
 import '../styles/todoStatesBtns.css'
+import Button from './accessibility/Button'
 
 const TodoStatesBtns: React.FC = () => {
   const todoType = localStorageType.getItem<TodoType>('todoType') ?? 'all'
@@ -51,12 +52,14 @@ const TodoStatesBtns: React.FC = () => {
         />     
       </div> 
 
-      <button
+      <Button      
         className='todo-states__clear-btn'
+        ariaLabel='clear completed todo'
+        type='button'
         onClick={deleteAllTodoCompleted}
       >
         Clear Completed
-      </button>
+      </Button>
     </div> 
   )
 }

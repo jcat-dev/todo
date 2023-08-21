@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { DragDropContext, Draggable, DropResult, Droppable } from 'react-beautiful-dnd'
 import iconCheck from '../assets/images/icon-check.svg'
 import iconCross from '../assets/images/icon-cross.svg'
+import Button from './accessibility/Button'
 import '../styles/todoList.css'
 
 const TodoList: React.FC = () => {
@@ -60,20 +61,26 @@ const TodoList: React.FC = () => {
                                     : 'todo-list__item-completed'
                                 }
                               >
-                                <button            
+                                <Button
                                   className={
                                     value.completed 
                                       ? 'completed-btn completed-btn--bg-active'
                                       : 'completed-btn'                      
-                                  }         
-                                  onClick={() => completeTodo(value)}
+                                  }    
+                                  ariaLabel={
+                                    value.completed 
+                                      ? 'completed todo'
+                                      : 'complete todo'
+                                  }
+                                  type='button'     
+                                  onClick={() => completeTodo(value)}                                
                                 >
                                   <img 
                                     hidden={!value.completed}
                                     src={iconCheck} 
                                     alt="icon check" 
                                   />
-                                </button>   
+                                </Button> 
                               </div>                     
                   
                               <p 
@@ -85,17 +92,19 @@ const TodoList: React.FC = () => {
                               >
                                 {value.title}
                               </p>
-                  
-                              <button 
+
+                              <Button
                                 className='todo-list__item-delete'
+                                ariaLabel='delete todo'
                                 onClick={() => deleteTodoByID(value._id)}
+                                type='button'
                               >
                                 <img 
                                   hidden
                                   src={iconCross} 
                                   alt="icon cross" 
                                 />
-                              </button>                              
+                              </Button>                            
                             </li>
                           )
                         }

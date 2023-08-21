@@ -1,5 +1,6 @@
 import { TodoType } from '../types/TodoType'
 import '../styles/todoStateBtn.css'
+import Button from './accessibility/Button'
 
 interface Props {
   type: TodoType
@@ -9,18 +10,20 @@ interface Props {
 
 const TodoStateBtn: React.FC<Props> = ({type, activeType, handleClick}) => {
   return (
-    <button
+    <Button
       className={
         type === activeType
           ? 'todo-state-btn todo-state-btn--active'
           : 'todo-state-btn'
       }
+      ariaLabel={`type of list todo ${type}`}
+      type='button'
       onClick={handleClick}
     >
       {
         type
       }
-    </button>
+    </Button>
   )
 }
 
