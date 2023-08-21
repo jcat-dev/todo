@@ -1,4 +1,3 @@
-import { useResizeWidth } from '../hooks/useResizeWidth'
 import { useContext } from 'react'
 import { ThemeContext } from '../contexts/ProviderLightTheme'
 import { TodoContext } from '../contexts/ProviderTodo'
@@ -10,9 +9,7 @@ import iconMoon from '../assets/images/icon-moon.svg'
 import Loading from './Loading'
 import '../styles/todo.css'
 
-const Todo: React.FC = () => {
-  const theme = useResizeWidth()
-  
+const Todo: React.FC = () => {  
   const { 
     lightModeEnabled,
     toggleTheme
@@ -25,16 +22,7 @@ const Todo: React.FC = () => {
   return (
     <main 
       className="main" 
-    >
-      <img 
-        src={
-          lightModeEnabled
-            ? theme?.lightImg
-            : theme?.darkImg
-        } 
-        alt="img background desktop/mobil" 
-      />
-                  
+    >                  
       <div
         className='todo-container'
       >
