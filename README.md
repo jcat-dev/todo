@@ -22,7 +22,7 @@ Users should be able to:
 - **Bonus**: Drag and drop to reorder items on the list
 
 ## Links
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [https://www.frontendmentor.io/solutions/todo-app-pa-kBSFsOQ](https://www.frontendmentor.io/solutions/todo-app-pa-kBSFsOQ)
 - Live Site URL: [https://todo-jec.vercel.app/](https://todo-jec.vercel.app/)
 
 ## Built with
@@ -39,6 +39,6 @@ Users should be able to:
 - CSS
 
 ## What I learned
-[X] Button Accessibility
-[X] Dark mode with LocalStorage
-[X] Drag and drop library
+- [x] Button Accessibility
+- [x] Dark mode with LocalStorage
+- [x] Drag and drop library
