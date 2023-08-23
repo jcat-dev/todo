@@ -33,12 +33,7 @@ Users should be able to:
   - [Formik](https://formik.org/)
   - [Yup](https://www.npmjs.com/package/yup)
   - [Drag and Drop](https://www.npmjs.com/package/react-beautiful-dnd)
-- Vite
-- ESLint
+- [Vite](https://vitejs.dev/)
+- [ESlint](https://eslint.org/)
 - HTML
 - CSS
-
-## What I learned
-- Button Accessibility
-- Dark mode with LocalStorage
-- Drag and drop library
