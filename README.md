@@ -39,6 +39,6 @@ Users should be able to:
 - CSS
 
 ## What I learned
-- [x] Button Accessibility
-- [x] Dark mode with LocalStorage
-- [x] Drag and drop library
+- Button Accessibility
+- Dark mode with LocalStorage
+- Drag and drop library
