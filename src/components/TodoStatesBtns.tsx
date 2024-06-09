@@ -4,7 +4,7 @@ import { TodoType } from '../types/TodoType'
 import TodoStateBtn from './TodoStateBtn'
 import localStorageType from '../utils/localStorageType'
 import '../styles/todoStatesBtns.css'
-import Button from './accessibility/Button'
+import Button from './buttons/Button'
 
 const TodoStatesBtns: React.FC = () => {
   const todoType = localStorageType.getItem<TodoType>('todoType') ?? 'all'

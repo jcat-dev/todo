@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { DragDropContext, Draggable, DropResult, Droppable } from 'react-beautiful-dnd'
 import iconCheck from '../assets/images/icon-check.svg'
 import iconCross from '../assets/images/icon-cross.svg'
-import Button from './accessibility/Button'
+import Button from './buttons/Button'
 import '../styles/todoList.css'
 
 const TodoList: React.FC = () => {

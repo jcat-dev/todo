@@ -7,7 +7,7 @@ import TodoStatesBtns from './TodoStatesBtns'
 import iconSun from '../assets/images/icon-sun.svg'
 import iconMoon from '../assets/images/icon-moon.svg'
 import Loading from './Loading'
-import Button from './accessibility/Button'
+import Button from './buttons/Button'
 import '../styles/todo.css'
 
 const Todo: React.FC = () => {  

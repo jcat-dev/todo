@@ -1,6 +1,6 @@
 import { TodoType } from '../types/TodoType'
 import '../styles/todoStateBtn.css'
-import Button from './accessibility/Button'
+import Button from './buttons/Button'
 
 interface Props {
   type: TodoType
