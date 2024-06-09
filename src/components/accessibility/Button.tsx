@@ -1,21 +1,29 @@
-interface Props {
+import { ButtonHTMLAttributes } from 'react'
+
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className: string
   ariaLabel: string
   type: 'button' | 'submit' | 'reset'
-  onClick: () => void
-  children: React.ReactNode
 }
 
 const Button: React.FC<Props> = (props) => {
+  const {
+    className,
+    ariaLabel,
+    type,
+    children,
+    ...rest
+  } = props
+
   return (
     <button
-      className={props.className}
-      aria-label={props.ariaLabel}
-      onClick={props.onClick}
-      type={props.type}
+      className={className}
+      aria-label={ariaLabel}      
+      type={type}
+      {...rest}
     >
       {
-        props.children
+        children
       }
     </button>
   )
