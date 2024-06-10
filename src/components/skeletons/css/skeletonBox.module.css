@@ -1,0 +1,20 @@
+.skeleton {
+  animation-name: skeleton;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+}
+
+@keyframes skeleton {
+  0% {
+    background-color: hsla(200, 20%, 75%, 0.7);
+  }
+
+  50% {
+    background-color: hsla(200, 20%, 85%, 0.7);
+  }
+
+  100% {
+    background-color: hsla(200, 20%, 95%, 1);
+  }
+}
