@@ -1,0 +1,8 @@
+.circle {
+  width: 1.5em;
+  height: 1.5em;
+  margin: auto;
+  border: 1px solid var(--color-VeryDarkGrayishBlue2);
+
+  border-radius: 100%;
+}
