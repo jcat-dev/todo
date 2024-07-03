@@ -2,21 +2,7 @@ import { createContext } from 'react'
 import { useTodo } from '../hooks/useTodo'
 import Todo from '../components/Todo'
 
-export const TodoContext = createContext<ReturnType<typeof useTodo>>({
-  todo: [],
-  filteredTodo: [],
-  isLoading: false,
-  
-  createTodo: async () => {},
-  deleteTodoByID: async () => {},
-  deleteAllTodoCompleted: async () => {},
-  completeTodo: async () => {},
-  sortTodo: async () => {},
-
-  getAllTodo:  () => {},
-  getActiveTodo:  () => {},
-  getCompletedTodo:  () => {},
-})
+export const TodoContext = createContext<ReturnType<typeof useTodo> | undefined>(undefined)
 
 const ProviderTodo = () => {
   return (
