@@ -1,105 +1,156 @@
 import { useEffect, useState } from 'react'
 import { Todo, TodoWithID } from '../types/Todo'
-import { TodoType } from '../types/TodoType'
-import fetchTodo from '../utils/fetchTodo'
-import localStorageType from '../utils/localStorageType'
+import { TODO_ACTIVE_VALUE, TODO_ALL_VALUE, TODO_COMPLETED_VALUE, TODO_TYPE_KEY } from '../constants/TODO_TYPE'
+import { fetchTodo } from '../utils/fetchTodo'
+import { sortArr } from '../utils/sortArr'
+import { FetchResponseWithData } from '../types/Fetch'
+
+interface LoadingTodo {
+  [key: string]: boolean
+}
 
 export const useTodo = () => {
-  const [todoList, setTodoList] = useState<TodoWithID[]>([])
-  const [filteredTodo, setFilteredTodo] = useState<TodoWithID[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [todos, setTodos] = useState<TodoWithID[]>([])
+  const [filteredTodos, setFilteredTodos] = useState<TodoWithID[]>([])
+  const [loadingTodos, setLoadingTodos] = useState<boolean>(true)
+  const [loadingTodo, setLoadingTodo] = useState<LoadingTodo>({})
+  const [todoFilter, setTodoFilter] = useState<number>(6)
 
-  useEffect(() => { 
-    updateTodo()
-  }, []) 
+  useEffect(() => {    
+    const getTodos = async () => {
+      const {status, data} = await fetchTodo<FetchResponseWithData<TodoWithID[]>>('/', 'GET')
 
-  const updateTodo = async () => {
-    const result = await fetchTodo.setGet()
-    
-    if (result.status) {      
-      const item = localStorageType.getItem<TodoType>('todoType')
-      setTodoList(result.data)
-
-      if (item === 'active') {
-        setFilteredTodo(result.data.filter((value) => !value.completed))        
-        return setIsLoading(false)
+      if (status) {  
+        setTodos(data)
+        setFilteredTodos(filterArrTodoByType(data))
       }
 
-      if (item === 'completed') {
-        setFilteredTodo(result.data.filter((value) => value.completed))        
-        return setIsLoading(false)
-      }
-
-      setFilteredTodo(result.data)      
-      return setIsLoading(false)
+      setLoadingTodos(false)
     }
+
+    getTodos()
+  }, [])
+
+  const filterArrTodoByType = (arr: TodoWithID[]) => {
+    const todoType = localStorage.getItem(TODO_TYPE_KEY)
+
+    if (todoType === TODO_ACTIVE_VALUE) return arr.filter((value) => !value.completed)
+    if (todoType === TODO_COMPLETED_VALUE) return arr.filter((value) => value.completed)
+    return arr
   }
 
-  const createTodo = async (value: Todo) => {   
-    setIsLoading(true)
-    await fetchTodo.setPost(value)
-    await updateTodo()
+  const addLoadingTodoByID = (id: string) => {
+    setLoadingTodo((prev) => ({...prev, [id]: true}))
+  }
+
+  const removeLoadingTodoByID = (id: string) => {
+    setLoadingTodo((prev) => {
+      const {[id]: _, ...rest} = prev
+      return rest
+    })
+  }
+
+  const createTodo = async (value: Todo) => {
+    setLoadingTodos(true)
+    const {status, data} = await fetchTodo<FetchResponseWithData<TodoWithID>>('/', 'POST', value)
+
+    if(status) {
+      const newTodos = [...todos, data]
+      setTodos(newTodos)
+      setFilteredTodos(filterArrTodoByType(newTodos))
+    }
+
+    setLoadingTodos(false)
+    return status
   }
 
   const deleteTodoByID = async (id: string) => {
-    setIsLoading(true)
-    await fetchTodo.setDelete(`/${id}`)
-    await updateTodo()
+    addLoadingTodoByID(id)
+    const {status} = await fetchTodo(`/${id}`, 'DELETE')
+    
+    if (status) {
+      const newTodos = todos.filter((value) => value._id !== id)
+      setTodos(newTodos)
+      setFilteredTodos(filterArrTodoByType(newTodos))
+    }
+
+    removeLoadingTodoByID(id)
+    return status
   }
 
   const deleteAllTodoCompleted = async () => {
-    setIsLoading(true)
-    await fetchTodo.setDelete()
-    await updateTodo()
+    setLoadingTodos(true)
+    const {status} = await fetchTodo('/', 'DELETE')
+
+    if (status) {
+      const newTodos = todos.filter((value) => !value.completed)
+      setTodos(newTodos)
+      setFilteredTodos(filterArrTodoByType(newTodos))
+    }
+
+    setLoadingTodos(false)
+    return status
   }
 
   const completeTodo = async (todo: TodoWithID) => {
-    setIsLoading(true)
-    await fetchTodo.setUpdate({...todo, completed: !todo.completed}, `/${todo._id}`)
-    await updateTodo()
-  }
+    addLoadingTodoByID(todo._id)
+    const {status} = await fetchTodo(`/${todo._id}`, 'PUT', {...todo, completed: !todo.completed})
 
-  const sortTodo = async (currentIndex: number, targetIndex: number) => {
-    setIsLoading(true)    
-    const todoType = localStorageType.getItem<TodoType>('todoType')   
-    
-    if (todoType === 'active') {     
-      const todoLength = todoList.filter((value) => value.completed).length
+    if (status) {
+      const result = await fetchTodo<FetchResponseWithData<TodoWithID[]>>('/', 'GET')
 
-      await fetchTodo.setUpdate({ 
-        currentIndex: currentIndex + todoLength, 
-        targetIndex: targetIndex + todoLength 
-      }, '/sort',)      
-      return await updateTodo()
+      if (result.status) {
+        setTodos(result.data)
+        setFilteredTodos(filterArrTodoByType(result.data))
+      }
     }
 
-    if (todoType !== 'completed') {
-      await fetchTodo.setUpdate({ currentIndex, targetIndex}, '/sort')
-      return await updateTodo()
-    }   
+    removeLoadingTodoByID(todo._id)
+    return status
+  }
+ 
+  const sortTodo = (currentIndex: number, targetIndex: number) => {
+    const todoType = localStorage.getItem(TODO_TYPE_KEY)
+    const completedTodoLength = todos.filter((value) => value.completed).length
+    const newTargetIndex = TODO_ALL_VALUE === todoType ? targetIndex : targetIndex + completedTodoLength
+    const newCurrentIndex = TODO_ALL_VALUE === todoType ? currentIndex : currentIndex + completedTodoLength
+    if (todoType === TODO_COMPLETED_VALUE || newTargetIndex < completedTodoLength || newCurrentIndex < completedTodoLength) return 
 
-    setIsLoading(false) 
+    fetchTodo('/sort', 'PUT', {
+      currentIndex: newCurrentIndex,
+      targetIndex: newTargetIndex
+    })
+
+    const newTodos = sortArr(todos, newCurrentIndex, newTargetIndex)
+    setFilteredTodos(filterArrTodoByType(newTodos))
+    setTodos(newTodos)
   }
 
   const getAllTodo = () => {
-    localStorageType.setItem<TodoType>('todoType', 'all')
-    setFilteredTodo(todoList)
+    localStorage.setItem(TODO_TYPE_KEY, TODO_ALL_VALUE)
+    setFilteredTodos(filterArrTodoByType(todos))
   }
 
   const getActiveTodo = () => {
-    localStorageType.setItem<TodoType>('todoType', 'active')
-    setFilteredTodo(todoList.filter((value) => !value.completed))
+    localStorage.setItem(TODO_TYPE_KEY, TODO_ACTIVE_VALUE)
+    setFilteredTodos(filterArrTodoByType(todos))
   }
-
+  
   const getCompletedTodo = () => {
-    localStorageType.setItem<TodoType>('todoType', 'completed')
-    setFilteredTodo(todoList.filter((value) => value.completed))
+    localStorage.setItem(TODO_TYPE_KEY, TODO_COMPLETED_VALUE)
+    setFilteredTodos(filterArrTodoByType(todos))
   }
 
+  const getMoreTodo = () => {
+    setTodoFilter(todoFilter + 3)
+  }
+
+  const todosLeft = filterArrTodoByType(todos).length
   return {
-    todo: todoList,
-    filteredTodo,
-    isLoading,
+    todos: filteredTodos.slice(0, todoFilter),
+    leftTodos: todosLeft > todoFilter ? todosLeft - todoFilter : 0,
+    loadingTodos,
+    loadingTodo,
     
     createTodo,
     deleteTodoByID,
@@ -110,5 +161,6 @@ export const useTodo = () => {
     getAllTodo,
     getActiveTodo,
     getCompletedTodo,
+    getMoreTodo
   }
 }
