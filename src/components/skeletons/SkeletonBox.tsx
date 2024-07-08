@@ -1,13 +1,18 @@
+import { HTMLAttributes, forwardRef } from 'react'
 import styles from './css/skeletonBox.module.css'
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   className: string
 }
 
-const SkeletonBox: React.FC<Props> = ({className}) => {
+const SkeletonBox = forwardRef<HTMLDivElement, Props>(({className, ...props}, ref) => {
   return (
-    <div className={`${styles['skeleton']} ${className}`} />
+    <div 
+      className={`${styles['skeleton']} ${className}`} 
+      {...props}
+      ref={ref}
+    />
   )
-}
+})
 
 export default SkeletonBox
