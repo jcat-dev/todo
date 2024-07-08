@@ -1,0 +1,17 @@
+.form {
+  min-height: 4em;
+  margin-bottom: 1em;
+
+  background-color: var(--color-VeryDarkDesaturatedBlue);
+  display: flex;
+  border-radius: 5px;  
+}
+
+.form-input {
+  color: var(--color-LightGrayishBlue);
+  width: calc(100% - (25px + 3em));
+
+  background-color: inherit;
+  caret-color: var(--color-BrightBlue);
+  border-radius: 5px;
+}

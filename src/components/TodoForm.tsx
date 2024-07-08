@@ -1,31 +1,32 @@
 import { Todo } from '../types/Todo'
 import { Formik, Form, Field, FormikHelpers } from 'formik'
-import { useContext } from 'react'
-import { TodoContext } from '../contexts/ProviderTodo'
+import { useTodoContext } from '../contexts/useTodoContext'
+import { TOAST_ERROR_MSG } from '../constants/TOAST_MSG'
+import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import '../styles/todoForm.css'
+import CircleShape from './shapes/CircleShape'
+import styles from './styles/todoForm.module.css'
 
 const TodoForm: React.FC = () => {
   const { 
     createTodo,
-    todo
-  } = useContext(TodoContext)
+  } = useTodoContext()
   
   const initialValues: Todo = {
     title: '',
     completed: false,
-    order: todo.length
   } 
   
   const validationSchema: Yup.ObjectSchema<Todo> = Yup.object({
     title: Yup.string().trim().required(),
     completed: Yup.boolean().required(),
-    order: Yup.number().required()
   })
  
   const handleForm = async (value: Todo, FormikHelpers: FormikHelpers<Todo>) => {
-    await createTodo(value)
-    FormikHelpers.resetForm()
+    const status = await createTodo(value)
+
+    if (status) return FormikHelpers.resetForm()
+    toast.error(TOAST_ERROR_MSG)
   }
 
   return(
@@ -35,13 +36,11 @@ const TodoForm: React.FC = () => {
       validationSchema={validationSchema}
       onSubmit={(value, formikHelpers) => handleForm(value, formikHelpers)}
     >
-      <Form
-        className='form'
-      >
-        <div className='form-circle' />
+      <Form className={styles['form']} >
+        <CircleShape />
               
         <Field
-          className="form-input"
+          className={styles['form-input']}
           type="text"
           id="title"
           name="title"
