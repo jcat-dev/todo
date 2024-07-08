@@ -1,0 +1,1 @@
+export const TOAST_ERROR_MSG = 'Hubo un error, inténtelo de nuevo.'
