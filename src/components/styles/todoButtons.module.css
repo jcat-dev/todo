@@ -1,0 +1,110 @@
+.todo-buttons {
+  font-size: 0.8em;
+  height: 4.5rem;
+
+  display: flex;
+  border-end-end-radius: 5px;
+  border-end-start-radius: 5px;
+  font-weight: bold;
+  color: var(--color-DarkGrayishBlue);
+  background-color: var(--color-VeryDarkDesaturatedBlue);
+  box-shadow: 0px 20px 40px -20px var(--color-shadow);
+}
+
+.number-button {
+  height: inherit;
+  margin-right: auto;    
+  padding: 0 1.5rem;
+  
+  background-color: var(--color-VeryDarkDesaturatedBlue);
+  color: inherit;
+  font-weight: inherit;
+  border-end-start-radius: 5px;
+
+  &:hover {
+    color: var(--color-LightGrayishBlueHover);
+    cursor: pointer;
+  }
+}
+
+.clear-button {
+  height: inherit;
+  margin-left: auto;    
+  padding: 0 1.5rem;
+  
+  background-color: var(--color-VeryDarkDesaturatedBlue);
+  color: inherit;
+  font-weight: inherit;
+  border-end-end-radius: 5px;
+
+  &:hover {
+    color: var(--color-LightGrayishBlueHover);
+    cursor: pointer;
+  }
+}
+
+.todo-buttons__buttons {  
+  height: inherit;
+  display: flex;
+  background-color: var(--color-VeryDarkDesaturatedBlue);    
+}
+
+.button {
+  padding: 0 0.75rem;
+  font-weight: inherit;
+  background-color: inherit;
+  color: inherit;
+
+  &.button--active {
+    color: var(--color-BrightBlue);
+  }
+  
+  &:hover {
+    color: var(--color-LightGrayishBlueHover);
+    cursor: pointer;
+  }
+}
+
+@media screen and (width < 768px) {
+  .todo-buttons {  
+    height: fit-content;
+
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat(2, 4em);
+    grid-template-areas: 
+    "count-button clear-button"
+    "type-button type-button";
+    row-gap: 1.25em;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .number-button {
+    grid-area: count-button;
+    width: 100%;
+    height: 100%;
+
+    text-align: start;
+    box-shadow: 0 5px 10px -10px var(--color-shadow);
+  }
+  
+  .clear-button {
+    grid-area: clear-button;
+    width: 100%;
+    height: 100%;
+
+    text-align: end;
+    box-shadow: 0 5px 10px -10px var(--color-shadow);
+  }
+
+  .todo-buttons__buttons {
+    grid-area: type-button;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px -15px var(--color-shadow);
+  }  
+}
