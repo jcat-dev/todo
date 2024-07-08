@@ -1,4 +1,4 @@
-[data-theme="dark"] {
+[data-theme="dark-mode"] {
   /*Background body*/
   --color-VeryDarkBlue: hsl(235, 21%, 11%);
   /*Background todo*/
@@ -18,7 +18,7 @@
   --bg-img-mobile: url("../assets/images/bg-mobile-dark.jpg");
 }
 
-[data-theme="light"] {
+[data-theme="light-mode"] {
   /*Background body*/
   --color-VeryDarkBlue: hsl(0, 0%, 98%);
   /*Background todo*/
