@@ -1,121 +1,146 @@
-import { TodoContext } from '../contexts/ProviderTodo'
-import { useContext } from 'react'
 import { DragDropContext, Draggable, DropResult, Droppable } from 'react-beautiful-dnd'
+import { useTodoContext } from '../contexts/useTodoContext'
+import { TodoWithID } from '../types/Todo'
+import { toast } from 'react-toastify'
+import { TOAST_ERROR_MSG } from '../constants/TOAST_MSG'
 import iconCheck from '../assets/images/icon-check.svg'
 import iconCross from '../assets/images/icon-cross.svg'
 import Button from './buttons/Button'
-import '../styles/todoList.css'
+import SkeletonTodo from './skeletons/SkeletonTodo'
+import CircleShape from './shapes/CircleShape'
+import SkeletonBox from './skeletons/SkeletonBox'
+import styles from './styles/todoList.module.css'
 
 const TodoList: React.FC = () => {
   const {
-    filteredTodo,
+    todos,
     completeTodo,
     deleteTodoByID,
-    sortTodo
-  } = useContext(TodoContext)
+    sortTodo,
+    loadingTodo,
+    loadingTodos
+  } = useTodoContext()
+
+  if (loadingTodos) {
+    return (
+      <SkeletonTodo />
+    )
+  }
   
   const handleDragAndDrop = (result: DropResult) => {
     const currentIndex = result.source.index
     const targetIndex = result.destination
 
     if (!targetIndex || currentIndex === targetIndex.index) return
-
     sortTodo(currentIndex, targetIndex.index)
   }
 
-  return (
-    <DragDropContext
-      onDragEnd={(result) => handleDragAndDrop(result)}
-    >
-      <Droppable
-        droppableId='todo'
-      >
-        {
-          (provided) => (         
-            <ul 
-              className='todo-list'
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {
-                filteredTodo.map((value, index) => {
-                  if (index <= 5) 
-                    return (
-                      <Draggable
-                        key={value._id}
-                        draggableId={value._id}
-                        index={index}
-                      >
-                        {
-                          (provided) => (                         
-                            <li 
-                              className='todo-list__item'
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                            >                              
-                              <div
-                                className={
-                                  value.completed
-                                    ? 'todo-list__item-completed todo-list__item-completed--bg-active'
-                                    : 'todo-list__item-completed'
-                                }
-                              >
-                                <Button
-                                  className={
-                                    value.completed 
-                                      ? 'completed-btn completed-btn--bg-active'
-                                      : 'completed-btn'                      
-                                  }    
-                                  ariaLabel={
-                                    value.completed 
-                                      ? 'completed todo'
-                                      : 'complete todo'
-                                  }
-                                  type='button'     
-                                  onClick={() => completeTodo(value)}                                
-                                >
-                                  <img 
-                                    hidden={!value.completed}
-                                    src={iconCheck} 
-                                    alt="icon check" 
-                                  />
-                                </Button> 
-                              </div>                     
-                  
-                              <p 
-                                className={
-                                  value.completed
-                                    ? 'todo-list__item-title todo-list__item-title--completed'
-                                    : 'todo-list__item-title'
-                                }
-                              >
-                                {value.title}
-                              </p>
+  const handleCompleteTodo = async (value: TodoWithID) => {
+    const status = await completeTodo(value)
+    if (!status) sendErrorMsg()
+  }
 
-                              <Button
-                                className='todo-list__item-delete'
-                                ariaLabel='delete todo'
-                                onClick={() => deleteTodoByID(value._id)}
-                                type='button'
-                              >
-                                <img 
-                                  hidden
-                                  src={iconCross} 
-                                  alt="icon cross" 
-                                />
-                              </Button>                            
-                            </li>
-                          )
-                        }
-                      </Draggable>
-                    )
-                })
-              }  
-              {provided.placeholder}    
-            </ul>
-          )
-        }
+  const handleDeleteByID = async (id: string) => {
+    const status = await deleteTodoByID(id)
+    if (!status) sendErrorMsg()
+  }
+
+  const sendErrorMsg = () => {
+    toast.error(TOAST_ERROR_MSG)
+  }
+
+  return (
+    <DragDropContext onDragEnd={(result) => handleDragAndDrop(result)} >
+      <Droppable droppableId='todo' >
+        {(provided) => (         
+          <ul 
+            className={styles['todo-list']}
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {
+              todos.map((value, index) => (
+                <Draggable
+                  draggableId={value._id}
+                  index={index}
+                  key={value._id}
+                >
+                  {(provided) => 
+                    loadingTodo[value._id]
+                      ? <SkeletonBox 
+                        className={styles['test']}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        key={value._id}
+                      />
+                      : <li 
+                        className={styles['todo-list__item']}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        key={value._id}
+                      >             
+                        <Button
+                          type='button'     
+                          onClick={() => handleCompleteTodo(value)}                                
+                          className={
+                            value.completed 
+                              ? `${styles['item-button']} ${styles['item-button--bg-active']}`
+                              : styles['item-button']                   
+                          }    
+                          ariaLabel={
+                            value.completed 
+                              ? 'completed todo'
+                              : 'complete todo'
+                          }
+                        >
+                          <CircleShape className={styles['circle']} >
+                            <CircleShape
+                              className={
+                                value.completed
+                                  ? `${styles['minor-circle']} ${styles['minor-circle--bg-active']}`
+                                  : styles['minor-circle']
+                              }
+                            >
+                              <img 
+                                className={styles['minor-circle__img']}
+                                hidden={!value.completed}
+                                src={iconCheck} 
+                                alt="icon check" 
+                              />
+                            </CircleShape>       
+                          </CircleShape>                           
+                        </Button>               
+                  
+                        <p className={
+                          value.completed
+                            ? `${styles['todo-list__item-text']} ${styles['todo-list__item-text--completed']}`
+                            : styles['todo-list__item-text']
+                        }>
+                          {value.title}
+                        </p>
+
+                        <Button
+                          className={styles['todo-list__item-delete']}
+                          ariaLabel='delete todo'
+                          onClick={() => handleDeleteByID(value._id)}
+                          type='button'
+                        >
+                          <img 
+                            className={styles['cross-icon']}
+                            hidden
+                            src={iconCross} 
+                            alt="cross icon" 
+                          />
+                        </Button>                            
+                      </li>
+                  }
+                </Draggable>
+              ))}  
+            {provided.placeholder}    
+          </ul>
+        )}
       </Droppable>
     </DragDropContext>
   )
