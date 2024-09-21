@@ -23,6 +23,7 @@ export const useTodo = () => {
       if (status) {  
         setTodos(data)
         setFilteredTodos(filterArrTodoByType(data))
+        localStorage.setItem(TODO_TYPE_KEY, TODO_ALL_VALUE)
       }
 
       setLoadingTodos(false)

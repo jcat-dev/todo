@@ -4,7 +4,7 @@ import Button from './buttons/Button'
 import styles from './styles/todoButtons.module.css'
 
 const TodoButtons: React.FC = () => {
-  const todoType = localStorage.getItem(TODO_TYPE_KEY) ?? TODO_ALL_VALUE
+  const todoType = localStorage.getItem(TODO_TYPE_KEY)
 
   const {
     leftTodos,
