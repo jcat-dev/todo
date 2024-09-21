@@ -110,14 +110,14 @@ export const useTodo = () => {
     return status
   }
  
-  const sortTodo = (currentIndex: number, targetIndex: number) => {
+  const sortTodoById = (id: string, currentIndex: number, targetIndex: number) => {
     const todoType = localStorage.getItem(TODO_TYPE_KEY)
     const completedTodoLength = todos.filter((value) => value.completed).length
     const newTargetIndex = TODO_ALL_VALUE === todoType ? targetIndex : targetIndex + completedTodoLength
     const newCurrentIndex = TODO_ALL_VALUE === todoType ? currentIndex : currentIndex + completedTodoLength
     if (todoType === TODO_COMPLETED_VALUE || newTargetIndex < completedTodoLength || newCurrentIndex < completedTodoLength) return 
 
-    fetchTodo('/sort', 'PUT', {
+    fetchTodo(`${'/sort/'}${id}`, 'PUT', {
       currentIndex: newCurrentIndex,
       targetIndex: newTargetIndex
     })
@@ -157,7 +157,7 @@ export const useTodo = () => {
     deleteTodoByID,
     deleteAllTodoCompleted,
     completeTodo,
-    sortTodo,
+    sortTodoById,
 
     getAllTodo,
     getActiveTodo,
