@@ -11,7 +11,7 @@ const Todo: React.FC = () => {
     <main className={styles['main']} >                  
       <div className={styles['todo']} >
         <h1 className={styles['todo-title']} >
-          TODO
+          NOTE
 
           <ThemeButton className={styles['todo-title__theme-button']} />
         </h1>       

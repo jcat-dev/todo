@@ -44,7 +44,7 @@ const TodoForm: React.FC = () => {
           type="text"
           id="title"
           name="title"
-          placeholder="Create a new todo..."
+          placeholder="Create a new note..."
         />
       </Form>
     </Formik>
