@@ -5,8 +5,8 @@
 ![](./src/assets/github/white-desktop.png)
 
 <div align="center">
-  <img src="./src/assets/github/dark-mobile.png" />
-  <img src="./src/assets/github/white-mobile.png" />
+  <img src="./src/assets/github/mobile.png" />
+  <img src="./src/assets/github/desktop.png" />
 </div>
 
 ## The challenge
